@@ -45,7 +45,6 @@ func UploadFileToS3(s *session.Session, file multipart.File, fileHeader *multipa
 	// create a unique file name for the file
 	tempFileName := "pictures/" + bson.NewObjectId().Hex() + filepath.Ext(fileHeader.Filename)
 
-	log.Printf("tempfilename: %s\n", tempFileName)
 	// Config settings: this sets up for uploaded file:
 	// - bucket
 	// - filename
@@ -85,8 +84,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Image too large. Max Size: %v", maxSize)
 		return
 	}
-	log.Printf("Req: %v\n", r)
 
+	// will refer to the form field
 	file, fileHeader, err := r.FormFile("file")
 	if err != nil {
 		log.Println(err)
